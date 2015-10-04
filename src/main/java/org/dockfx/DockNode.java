@@ -320,6 +320,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
       stage.sizeToScene();
 
       stage.show();
+      dockPane.getFloatingNodes().add(this);
     } else if (!floating && this.isFloating()) {
       this.floatingProperty.set(floating);
 
@@ -328,6 +329,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
       stage.removeEventFilter(MouseEvent.MOUSE_DRAGGED, this);
 
       stage.close();
+      dockPane.getFloatingNodes().remove(this);
     }
   }
 

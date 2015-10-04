@@ -20,10 +20,7 @@
 
 package org.dockfx;
 
-import java.util.Stack;
-
 import com.sun.javafx.css.StyleManager;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -44,6 +41,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
 import javafx.util.Duration;
+
+import java.util.Stack;
 
 /**
  * Base class for a dock pane that provides the layout of the dock nodes. Stacking the dock nodes to
@@ -177,6 +176,18 @@ public class DockPane extends StackPane implements EventHandler<DockEvent> {
    */
   private ObservableList<DockPosButton> dockPosButtons;
 
+
+  public ObservableList<DockNode> getFloatingNodes() {
+    return floatingNodes;
+  }
+
+  private ObservableList<DockNode> floatingNodes = FXCollections.observableArrayList();
+
+  public void closeAllFloatingNodes(){
+    for (DockNode floatingNode : floatingNodes) {
+      floatingNode.getStage().close();
+    }
+  }
 
   /**
    * Creates a new DockPane adding event handlers for dock events and creating the indicator
