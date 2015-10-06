@@ -20,12 +20,7 @@
 
 package org.dockfx;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.css.PseudoClass;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -131,6 +126,8 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
       return "maximized";
     }
   };
+
+  private boolean stayWithDockPane = false;
 
   /**
    * Creates a default DockNode with a default title bar and layout.
@@ -247,10 +244,13 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
       }
 
       stage = new Stage();
+
       stage.titleProperty().bind(titleProperty);
       if (dockPane != null && dockPane.getScene() != null
           && dockPane.getScene().getWindow() != null) {
-        stage.initOwner(dockPane.getScene().getWindow());
+        if (this.stayWithDockPane) {
+          stage.initOwner(dockPane.getScene().getWindow());
+        }
       }
 
       stage.initStyle(stageStyle);
@@ -729,8 +729,9 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
       } else if (sizeSouth) {
         cursor = Cursor.S_RESIZE;
       }
-
-      this.getScene().setCursor(cursor);
+        if (this.getScene() != null) {
+            this.getScene().setCursor(cursor);
+        }
     } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED && this.isMouseResizeZone()) {
       Point2D sizeCurrent = new Point2D(event.getScreenX(), event.getScreenY());
       Point2D sizeDelta = sizeCurrent.subtract(sizeLast);
