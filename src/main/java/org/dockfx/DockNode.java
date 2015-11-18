@@ -31,6 +31,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
@@ -147,6 +148,7 @@ public class DockNode extends VBox implements EventHandler<MouseEvent> {
 
     getChildren().addAll(dockTitleBar, contents);
     VBox.setVgrow(contents, Priority.ALWAYS);
+    HBox.setHgrow(contents, Priority.ALWAYS);
 
     this.getStyleClass().add("dock-node");
   }
